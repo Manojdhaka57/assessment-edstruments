@@ -2,13 +2,11 @@ import React, { Fragment } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../providers/AuthProvider";
 
-const PublicRoute = ({ children }) => {
+const PublicRoute = ({ children, isAuthCheck }) => {
   const { isAuthenticated } = useAuth();
-  console.log("@test isAuthenticated public", isAuthenticated);
-  if (isAuthenticated) {
-    return <Navigate to={"/main"} replace />;
+  if (isAuthCheck && isAuthenticated) {
+    return <Navigate to={"/vendor-details"} replace={true} />;
   }
-  console.log("after isAuthenticated public");
   return <Fragment>{children ? children : <Outlet />}</Fragment>;
 };
 

@@ -9,7 +9,6 @@ export const Logout = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
   };
 
   return <Button onClick={handleLogout}>Logout</Button>;

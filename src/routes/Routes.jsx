@@ -9,23 +9,13 @@ import { useAuth } from "../providers/AuthProvider";
 import VendorDetails from "../pages/Form/VendorDetails.jsx";
 
 const AppRoutes = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { isAuthenticated } = useAuth();
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate(location.pathname);
-    } else {
-      navigate("/login");
-    }
-  }, [isAuthenticated]);
   return (
     <Layout>
       <Routes>
         <Route
           path="/login"
           element={
-            <PublicRoute>
+            <PublicRoute isAuthCheck={true}>
               <Login />
             </PublicRoute>
           }
@@ -38,7 +28,7 @@ const AppRoutes = () => {
             </PrivateRoute>
           }
         />
-        <Route path="*" element={<>page not found</>} />
+        <Route path="/*" element={<>page not found</>} />
       </Routes>
     </Layout>
   );

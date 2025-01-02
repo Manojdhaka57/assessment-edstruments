@@ -7,7 +7,6 @@ import { LoginContainer, StyledLoginForm } from "./Login.styled";
 import { useAuth } from "../../providers/AuthProvider.jsx";
 
 const Login = () => {
-  const navigate = useNavigate();
   const { login } = useAuth();
 
   const formik = useFormik({
@@ -22,9 +21,7 @@ const Login = () => {
     onSubmit: (values) => {
       // Simulate login (replace this with actual API call)
       if (values.username === "admin" && values.password === "password") {
-        console.log("before");
         login(values);
-        console.log("@test after");
       } else {
         alert("Invalid username or password");
       }
