@@ -1,6 +1,12 @@
+import { ReactComponent as InvoiceDetailsIcon } from '../../images/invoice-details.svg';
+import { ReactComponent as CommentsIcon } from '../../images/comments.svg';
+import { ReactComponent as VendorDetailsIcon } from '../../images/vendor-details.svg';
+
+export const formTabs = ['Vendor Details', 'Invoice Details', 'Comments'];
 export const formConfig = {
   vendorInformation: {
     label: 'Vendor Details',
+    icon: <VendorDetailsIcon />,
     subFields: [
       {
         subLabel: 'Vendor Information',
@@ -22,6 +28,7 @@ export const formConfig = {
   },
   invoiceDetails: {
     label: 'Invoice Details',
+    icon: <InvoiceDetailsIcon />,
     subFields: [
       {
         subLabel: 'General Information',
@@ -64,6 +71,9 @@ export const formConfig = {
             name: 'totalAmount',
             label: 'Total Amount',
             required: true,
+            placeholder: '0.00',
+            startAdornment: '$',
+            endAdornment: 'USD',
           },
           {
             type: 'select',
@@ -105,7 +115,9 @@ export const formConfig = {
             name: 'lineAmount',
             label: 'Line Amount',
             required: true,
-            startAdornment: '₹',
+            placeholder: '0.00',
+            startAdornment: '$',
+            endAdornment: 'USD',
           },
           {
             type: 'select',
@@ -152,6 +164,7 @@ export const formConfig = {
   },
   comments: {
     label: 'Comments',
+    icon: <CommentsIcon />,
     subFields: [
       {
         subLabel: '',

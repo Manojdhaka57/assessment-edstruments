@@ -10,3 +10,8 @@ export const devices = {
   laptop: `(min-width: ${breakpointSize.laptop}px) and (max-width:${breakpointSize.desktop}px)`,
   desktop: `(min-width: ${breakpointSize.desktop}px)`,
 };
+
+export const ROUTES = {
+  LOGIN: '/login',
+  VENDOR_DETAILS: '/vendor-details',
+};

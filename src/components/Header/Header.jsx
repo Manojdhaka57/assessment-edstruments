@@ -1,5 +1,9 @@
 import React from 'react';
-import { HeaderContents } from './Header.styled';
+import {
+  HeaderContents,
+  StyledHeaderTitleBlock,
+  StyledHeaderUserBlock,
+} from './Header.styled';
 import { Logout } from '../Logout/Logout';
 import { useAuth } from '../../providers/AuthProvider';
 
@@ -7,8 +11,11 @@ const Header = () => {
   const { user } = useAuth();
   return (
     <HeaderContents>
-      <h2>{user?.username}</h2>
-      <Logout />
+      <StyledHeaderTitleBlock>Edstruments</StyledHeaderTitleBlock>
+      <StyledHeaderUserBlock>
+        <h3>{user?.username}</h3>
+        <Logout />
+      </StyledHeaderUserBlock>
     </HeaderContents>
   );
 };

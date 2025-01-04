@@ -1,5 +1,6 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../utils';
 
 const AuthContext = createContext();
 
@@ -16,14 +17,14 @@ export const AuthProvider = ({ children }) => {
     setUser(credentials);
     localStorage.setItem('user', JSON.stringify(credentials));
     localStorage.setItem('isAuthenticated', true);
-    navigate('/vendor-details');
+    navigate(ROUTES.VENDOR_DETAILS);
   };
 
   const logout = () => {
     setIsAuthenticated(false);
     setUser({});
     localStorage.clear();
-    navigate('/login');
+    navigate(ROUTES.LOGIN);
   };
   const value = useMemo(
     () => ({

@@ -1,17 +1,16 @@
 import styled from 'styled-components';
 import { devices } from '../../utils';
+import { Field } from 'formik';
 
 export const StyledContent = styled.div`
   display: flex;
   flex-direction: row;
   gap: 24px;
-  padding: 24px;
   @media ${devices.mobile} {
     flex-direction: column;
   }
 `;
 export const StyledUploader = styled.div`
-  border: 1px solid black;
   flex: 0 1 50%;
   @media ${devices.mobile} {
     flex: 1 1 100%;
@@ -22,97 +21,8 @@ export const StyledFormContent = styled.div`
   flex: 1 1 50%;
   width: 100%;
   margin: 0 auto;
-  padding: 1rem;
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-  .form-error-message,
-  .form-success-message {
-    padding: 12px 16px;
-    margin: 0 0 20px;
-    border-radius: 4px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    animation: slideIn 0.3s ease;
-  }
-
-  .form-error-message {
-    background-color: #fff3f3;
-    color: #dc3545;
-    border: 1px solid #ffcdd2;
-  }
-
-  /* Success Message Specific Styles */
-  .form-success-message {
-    background-color: #f0fff4;
-    color: #28a745;
-    border: 1px solid #c3e6cb;
-  }
-
-  /* Icons for Status Messages */
-  .form-error-message::before,
-  .form-success-message::before {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-  }
-
-  .form-error-message::before {
-    content: '⚠️';
-  }
-
-  .form-success-message::before {
-    content: '✓';
-  }
-
-  /* Animation for Status Messages */
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Fields Row Container */
-  .fields-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 16px;
-  }
-
-  /* Form Group */
-  .form-group {
-    flex: 1 1 calc(-10px + 50%);
-    min-width: 150px;
-    margin-bottom: 1.5rem;
-    position: relative;
-  }
-
-  label {
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #333333;
-    margin-bottom: 0.5rem;
-  }
-  .form-control {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    transition: all 0.2s ease-in-out;
-  }
 
   /* Input focus states */
   .form-control:focus {
@@ -130,54 +40,9 @@ export const StyledFormContent = styled.div`
     padding-right: 2.5rem;
   }
 
-  /* Date input specific styles */
-  input[type='date'].form-control {
-    padding-right: 0.5rem;
-  }
-
-  /* Error states */
-  .error {
-    color: #dc3545;
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
-    position: absolute;
-    bottom: -20px;
-  }
-  .form-control.error {
-    border-color: #dc3545;
-  }
-
-  /* Submit Button */
-  button[type='submit'],
-  button[type='reset'] {
-    width: 48%;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #ffffff;
-    background-color: #4a90e2;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-  }
-
-  button[type='submit']:hover {
-    background-color: #357abd;
-  }
-
-  button[type='submit']:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-
   /* Optional: Form field icons */
   .form-group-icon {
     position: relative;
-  }
-
-  .form-group-icon .form-control {
-    padding-left: 2.5rem;
   }
 
   .form-group-icon i {
@@ -187,79 +52,332 @@ export const StyledFormContent = styled.div`
     transform: translateY(-50%);
     color: #6c757d;
   }
-
-  /* Optional: Disabled state */
-  .form-control:disabled {
-    background-color: #e9ecef;
-    cursor: not-allowed;
-  }
-
-  /* Optional: Required field indicator */
-  label.required::after {
-    content: '*';
-    color: #dc3545;
-    margin-left: 4px;
-  }
-
-  /* Optional: Input placeholder styling */
-  .form-control::placeholder {
-    color: #6c757d;
-    opacity: 0.5;
-  }
-
-  /* Optional: Hover states */
-  .form-control:hover {
-    border-color: #b3b3b3;
-  }
-
-  .form-field-label {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #333333;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-  }
-
-  /* Sub Fields Container */
-  .form-sub-fields {
-    margin-bottom: 24px;
-  }
-
-  /* Sub Label Styling */
-  .form-field-sub-label {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #495057;
-    margin-bottom: 24px;
-  }
-
-  /* Required Field Indicator */
-  .required-field::after {
-    content: '*';
-    color: #dc3545;
-    margin-left: 4px;
-  }
-  @media ${devices.mobile} {
-    .form-container {
-      padding: 1rem;
-    }
-
-    .form-control {
-      padding: 0.625rem 0.875rem;
-    }
-
-    .form-group {
-      flex: 1 1 100%;
-      min-width: 150px;
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-  }
 `;
 
 export const StyledButtonGroup = styled.div`
   display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  border: 1px solid #e7eaee;
+  padding: 16px 20px;
+  border-radius: 8px;
+
+  button {
+    padding: 12px 20px;
+    flex: 1 1 calc(-12px + 50%);
+    min-width: 160px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+    background-color: #1787e0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  .reset-btn {
+    background-color: #fff;
+    color: #0d0f11;
+    border: 1px solid #64748b;
+  }
+`;
+
+export const StyledUploaderWrapper = styled.div`
+  padding: 80px 50px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+
+  & .title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    color: #0d0f11;
+  }
+
+  & .title {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  & .sub-title {
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  & .uploder-icon {
+    width: 100%;
+    height: 100%;
+  }
+  & .upload-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    button {
+      border-radius: 8px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  & .upload-instruction {
+    font-size: 14px;
+    font-weight: 400;
+    & .link {
+      font-weight: 600;
+      color: #1787e0;
+    }
+  }
+
+  @media ${devices.mobile} {
+    padding: 5px;
+    font-size: 14px;
+
+    .title {
+      font-size: 16px;
+    }
+    .sub-title {
+      font-size: 12px;
+    }
+    .upload-instruction {
+      font-size: 12px;
+    }
+  }
+`;
+
+export const StyledFormIcon = styled.div`
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #e8f3fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StyledFormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+`;
+
+export const StyledFormSubContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+`;
+
+export const StyledFormFieldHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #0d0f11;
+`;
+
+export const StyledFormSubField = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
+
+export const StyledFormErrorDiv = styled.div`
+  &.form-error-message {
+    background-color: #fff3f3;
+    color: #dc3545;
+    border: 1px solid #ffcdd2;
+  }
+  /* Icons for Status Messages */
+  &.form-error-message::before,
+  &.form-success-message::before {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+
+  &.form-error-message::before {
+    content: '⚠️';
+  }
+
+  &.form-success-message::before {
+    content: '✓';
+  }
+
+  &.form-error-message,
+  &.form-success-message {
+    padding: 12px 16px;
+    margin: 0 0 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: slideIn 0.3s ease;
+  }
+
+  /* Success Message Specific Styles */
+  &.form-success-message {
+    background-color: #f0fff4;
+    color: #28a745;
+    border: 1px solid #c3e6cb;
+  }
+
+  /* Animation for Status Messages */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+
+export const StyledSubFieldLabel = styled.div`
+  font-size: 20px;
+  font-weight: 600;
+  color: #0d0f11;
+`;
+
+export const StyledFormFieldRows = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+`;
+
+export const StyledInputField = styled.div`
+  flex: 1 1 calc(-10px + 50%);
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media ${devices.mobile} {
+    flex: 1 1 100%;
+  }
+`;
+
+export const StyledInputLabel = styled.label`
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  color: #4b5768;
+
+  .required-field::after {
+    content: '*';
+    color: #e11900;
+    margin-left: 4px;
+  }
+`;
+
+export const StyledFieldError = styled.div`
+  color: #e11900;
+  font-size: 12px;
+`;
+
+export const StyledField = styled(Field)`
+  width: 100%;
+  font-size: 14px;
+  background-color: #fff;
+  border: 1px solid #64748b;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+  height: 40px;
+  padding: 12px;
+
+  ::placeholder {
+    color: #6c757d;
+    opacity: 0.5;
+  }
+`;
+
+export const StyledFormFieldWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  background: #f9f9f9;
+
+  .input-adornment {
+    height: 40px;
+    padding: 12px;
+    background-color: #e7eaee;
+    z-index: 1;
+    border: 1px solid #64748b;
+    color: #4b5768;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .start-adornment {
+    margin-right: -6px;
+    border-radius: 8px 0 0 8px;
+    border-right: none;
+  }
+  .end-adornment {
+    margin-left: -6px;
+    border-left: none;
+    border-radius: 0px 8px 8px 0;
+  }
+`;
+
+export const StyledFormTabs = styled.div`
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  gap: 20px;
-  margin-top: 20px;
+  gap: 24px;
+  padding: 20px 0px;
+
+  @media ${devices.mobile} {
+    flex-direction: column;
+  }
+`;
+
+export const StyledTabs = styled.ul`
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  li {
+    list-style: none;
+    display: block;
+    a {
+      display: block;
+      color: #0d0f11;
+      font-size: 16px;
+      font-weight: 400;
+      text-decoration: none;
+      padding: 12px 16px;
+
+      &.active {
+        color: #1787e0;
+        border-bottom: 2px solid #1787e0;
+        font-weight: 600;
+      }
+    }
+  }
+
+  @media ${devices.mobile} {
+    li a {
+      padding: 8px;
+      font-size: 12px;
+    }
+  }
+`;
+
+export const StyledHeaderTitle = styled.div`
+  font-size: 20px;
+  font-weight: 600;
+  color: #0d0f11;
 `;
