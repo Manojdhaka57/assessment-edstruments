@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
   html{
@@ -15,7 +15,7 @@ export const Button = styled.button`
   border: 1px solid #64748b;
   border-radius: 8px;
   padding: 8px 16px;
-  box-shadow: "none";
+  box-shadow: 'none';
   font-weight: 700;
   background-color: #fff;
   cursor: pointer;

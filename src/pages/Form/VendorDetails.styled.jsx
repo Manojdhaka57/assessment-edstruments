@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { devices } from "../../utils";
+import styled from 'styled-components';
+import { devices } from '../../utils';
 
 export const StyledContent = styled.div`
   display: flex;
@@ -60,11 +60,11 @@ export const StyledFormContent = styled.div`
   }
 
   .form-error-message::before {
-    content: "⚠️";
+    content: '⚠️';
   }
 
   .form-success-message::before {
-    content: "✓";
+    content: '✓';
   }
 
   /* Animation for Status Messages */
@@ -131,7 +131,7 @@ export const StyledFormContent = styled.div`
   }
 
   /* Date input specific styles */
-  input[type="date"].form-control {
+  input[type='date'].form-control {
     padding-right: 0.5rem;
   }
 
@@ -148,8 +148,8 @@ export const StyledFormContent = styled.div`
   }
 
   /* Submit Button */
-  button[type="submit"],
-  button[type="reset"] {
+  button[type='submit'],
+  button[type='reset'] {
     width: 48%;
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
@@ -162,11 +162,11 @@ export const StyledFormContent = styled.div`
     transition: background-color 0.2s ease-in-out;
   }
 
-  button[type="submit"]:hover {
+  button[type='submit']:hover {
     background-color: #357abd;
   }
 
-  button[type="submit"]:disabled {
+  button[type='submit']:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
   }
@@ -196,7 +196,7 @@ export const StyledFormContent = styled.div`
 
   /* Optional: Required field indicator */
   label.required::after {
-    content: "*";
+    content: '*';
     color: #dc3545;
     margin-left: 4px;
   }
@@ -235,7 +235,7 @@ export const StyledFormContent = styled.div`
 
   /* Required Field Indicator */
   .required-field::after {
-    content: "*";
+    content: '*';
     color: #dc3545;
     margin-left: 4px;
   }

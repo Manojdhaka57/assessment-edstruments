@@ -1,13 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+import React, { useEffect, useMemo, useState } from 'react';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 import {
   StyledButtonGroup,
   StyledContent,
   StyledFormContent,
   StyledUploader,
-} from "./VendorDetails.styled.jsx";
-import { formConfig } from "./constant.jsx";
+} from './VendorDetails.styled.jsx';
+import { formConfig } from './constant.jsx';
 
 const VendorDetails = () => {
   // Dynamic validation schema based on formConfig
@@ -23,14 +23,14 @@ const VendorDetails = () => {
             let fieldValidation = Yup.string();
 
             switch (field.type) {
-              case "date":
+              case 'date':
                 fieldValidation = Yup.date();
                 break;
-              case "number":
+              case 'number':
                 fieldValidation = Yup.number();
                 break;
-              case "email":
-                fieldValidation = Yup.string().email("Invalid email format");
+              case 'email':
+                fieldValidation = Yup.string().email('Invalid email format');
                 break;
               default:
                 fieldValidation = Yup.string();
@@ -62,10 +62,10 @@ const VendorDetails = () => {
     });
 
     return Yup.object().shape(schemaFields);
-  }, [formConfig]);
+  }, []);
   // Initial form values - check localStorage first, otherwise use defaults
   const getInitialValues = () => {
-    const savedData = localStorage.getItem("vendorFormData");
+    const savedData = localStorage.getItem('vendorFormData');
     return savedData ? JSON.parse(savedData) : {};
   };
 
@@ -89,17 +89,17 @@ const VendorDetails = () => {
       // If there are validation errors, set them and stop submission
       if (Object.keys(validationErrors).length > 0) {
         setErrors(validationErrors);
-        setStatus({ submitError: "Please fill in all required fields" });
+        setStatus({ submitError: 'Please fill in all required fields' });
         return;
       }
 
       // Add your API call or submission logic here
-      localStorage.setItem("vendorFormData", JSON.stringify({}));
+      localStorage.setItem('vendorFormData', JSON.stringify({}));
 
       // Clear any previous status messages
-      setStatus({ success: "Form submitted successfully" });
+      setStatus({ success: 'Form submitted successfully' });
     } catch (error) {
-      setStatus({ submitError: "An error occurred while submitting the form" });
+      setStatus({ submitError: 'An error occurred while submitting the form' });
     } finally {
       setSubmitting(false);
     }
@@ -107,22 +107,22 @@ const VendorDetails = () => {
 
   const handleFormChange = (values) => {
     try {
-      localStorage.setItem("vendorFormData", JSON.stringify(values));
+      localStorage.setItem('vendorFormData', JSON.stringify(values));
     } catch (error) {
-      console.error("Error saving to localStorage:", error);
+      console.error('Error saving to localStorage:', error);
     }
   };
 
   const getRenderField = (field, errors) => {
-    if (field.type === "select") {
+    if (field.type === 'select') {
       return (
-        <div className="form-group" key={`${field.label}`}>
+        <div className='form-group' key={`${field.label}`}>
           <label htmlFor={field.name}>
             {field.label}
-            {field.required && <span className="required-field" />}
+            {field.required && <span className='required-field' />}
           </label>
-          <Field as="select" name={field.name} className="form-control">
-            <option value="">{`Select ${field.label}`}</option>
+          <Field as='select' name={field.name} className='form-control'>
+            <option value=''>{`Select ${field.label}`}</option>
             {field.options.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -130,41 +130,41 @@ const VendorDetails = () => {
             ))}
           </Field>
           {errors[field.name] ? (
-            <div className="error">{errors[field.name]}</div>
+            <div className='error'>{errors[field.name]}</div>
           ) : null}
         </div>
       );
-    } else if (field.type === "text") {
+    } else if (field.type === 'text') {
       return (
-        <div className="form-group" key={`${field.label}`}>
+        <div className='form-group' key={`${field.label}`}>
           <label htmlFor={field.name}>
             {field.label}
-            {field.required && <span className="required-field" />}
+            {field.required && <span className='required-field' />}
           </label>
-          <div className="input-wrapper">
+          <div className='input-wrapper'>
             {field.startAdornment && (
-              <div className="input-adornment start-adornment">
+              <div className='input-adornment start-adornment'>
                 {field.startAdornment}
               </div>
             )}
-            <Field type="text" name={field.name} className="form-control" />
+            <Field type='text' name={field.name} className='form-control' />
           </div>
 
           {errors[field.name] ? (
-            <div className="error">{errors[field.name]}</div>
+            <div className='error'>{errors[field.name]}</div>
           ) : null}
         </div>
       );
-    } else if (field.type === "date") {
+    } else if (field.type === 'date') {
       return (
-        <div className="form-group" key={`${field.label}`}>
+        <div className='form-group' key={`${field.label}`}>
           <label htmlFor={field.name}>
             {field.label}
-            {field.required && <span className="required-field" />}
+            {field.required && <span className='required-field' />}
           </label>
-          <Field type="date" name={field.name} className="form-control" />
+          <Field type='date' name={field.name} className='form-control' />
           {errors[field.name] ? (
-            <div className="error">{errors[field.name]}</div>
+            <div className='error'>{errors[field.name]}</div>
           ) : null}
         </div>
       );
@@ -189,7 +189,7 @@ const VendorDetails = () => {
 
     return (
       <div
-        className={`save-indicator ${showSaveIndicator ? "visible" : ""}`}
+        className={`save-indicator ${showSaveIndicator ? 'visible' : ''}`}
       ></div>
     );
   };
@@ -221,28 +221,28 @@ const VendorDetails = () => {
                 <AutoSave values={values} onSave={handleFormChange} />
                 {/* Show form-level status messages */}
                 {status?.submitError && (
-                  <div className="form-error-message">{status.submitError}</div>
+                  <div className='form-error-message'>{status.submitError}</div>
                 )}
                 {status?.success && (
-                  <div className="form-success-message">{status.success}</div>
+                  <div className='form-success-message'>{status.success}</div>
                 )}
                 {Object.values(formConfig).map((formField, index) => {
                   return (
                     <div key={index}>
-                      <div className="form-field-label">{formField.label}</div>
-                      <div className="form-sub-fields">
+                      <div className='form-field-label'>{formField.label}</div>
+                      <div className='form-sub-fields'>
                         {formField.subFields.map((subField, ind) => {
                           return (
                             <div key={`${subField.subLabel}-${ind}`}>
                               {subField.subLabel && (
                                 <div
-                                  className="form-field-sub-label"
+                                  className='form-field-sub-label'
                                   key={`${subField.subLabel}-${ind}`}
                                 >
                                   {subField.subLabel}
                                 </div>
                               )}
-                              <div className="fields-row">
+                              <div className='fields-row'>
                                 {subField.fields.map((field) =>
                                   getRenderField(field, errors)
                                 )}
@@ -255,11 +255,11 @@ const VendorDetails = () => {
                   );
                 })}
                 <StyledButtonGroup>
-                  <button type="reset" onClick={resetForm}>
+                  <button type='reset' onClick={resetForm}>
                     Reset All
                   </button>
                   <button
-                    type="submit"
+                    type='submit'
                     onClick={() =>
                       handleSubmit(values, {
                         setSubmitting,
@@ -268,7 +268,7 @@ const VendorDetails = () => {
                       })
                     }
                   >
-                    {isSubmitting ? "Submitting..." : "Submit"}
+                    {isSubmitting ? 'Submitting...' : 'Submit'}
                   </button>
                 </StyledButtonGroup>
               </Form>

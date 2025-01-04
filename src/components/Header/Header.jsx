@@ -1,7 +1,7 @@
-import React from "react";
-import { HeaderContents } from "./Header.styled";
-import { Logout } from "../Logout/Logout";
-import { useAuth } from "../../providers/AuthProvider";
+import React from 'react';
+import { HeaderContents } from './Header.styled';
+import { Logout } from '../Logout/Logout';
+import { useAuth } from '../../providers/AuthProvider';
 
 const Header = () => {
   const { user } = useAuth();
