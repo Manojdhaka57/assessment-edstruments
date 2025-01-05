@@ -1,5 +1,16 @@
 # Assessment - Edstruments
 
+## Live Link
+
+- [Assessment Edstruments (https://assessment-edstruments.vercel.app)](https://assessment-edstruments.vercel.app)
+
+## credentials for live links
+
+```
+username: admin
+password: password
+```
+
 ### Installation
 
 1. Clone the repository
