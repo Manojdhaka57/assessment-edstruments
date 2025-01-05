@@ -3,6 +3,12 @@ import { ReactComponent as CommentsIcon } from '../../images/comments.svg';
 import { ReactComponent as VendorDetailsIcon } from '../../images/vendor-details.svg';
 
 export const formTabs = ['Vendor Details', 'Invoice Details', 'Comments'];
+export const uploaderFormValues = {
+  vendor: 'vendor1',
+  purchaseOrderNumber: 'po1',
+  paymentTerms: 'net30',
+  totalAmount: '20.4',
+};
 export const formConfig = {
   vendorInformation: {
     label: 'Vendor Details',

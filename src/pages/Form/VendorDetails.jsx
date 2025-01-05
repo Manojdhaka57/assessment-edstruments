@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { HiUpload } from 'react-icons/hi';
 import * as Yup from 'yup';
 import {
@@ -25,13 +25,21 @@ import {
   StyledTabs,
   StyledHeaderTitle,
 } from './VendorDetails.styled.jsx';
-import { formConfig, formTabs } from './constant.jsx';
+import { formConfig, formTabs, uploaderFormValues } from './constant.jsx';
 import FileUploader from '../../components/FileUploader/FileUploader.jsx';
 import { Button } from '../../styles/GlobalStyles.jsx';
 import { ReactComponent as FileUploderIcon } from '../../images/fileUploder.svg';
 
 const VendorDetails = () => {
   const [selectedTab, setSelectedTab] = useState('Vendor Details');
+  const [formValues, setFormValues] = useState(
+    JSON.parse(localStorage.getItem('vendorFormData')) || {}
+  );
+  const [formErrors, setFormErrors] = useState({});
+
+  useEffect(() => {
+    localStorage.setItem('vendorFormData', JSON.stringify(formValues));
+  }, [formValues]);
   // Dynamic validation schema based on formConfig
   const validationSchema = useMemo(() => {
     let schemaFields = {};
@@ -40,7 +48,7 @@ const VendorDetails = () => {
     Object.values(formConfig).forEach((section) => {
       section.subFields.forEach((subField) => {
         subField.fields.forEach((field) => {
-          if (field.required) {
+          if (field.required && !formValues[field.name]) {
             // Basic validation based on field type
             let fieldValidation = Yup.string();
 
@@ -85,11 +93,6 @@ const VendorDetails = () => {
 
     return Yup.object().shape(schemaFields);
   }, []);
-  // Initial form values - check localStorage first, otherwise use defaults
-  const getInitialValues = () => {
-    const savedData = localStorage.getItem('vendorFormData');
-    return savedData ? JSON.parse(savedData) : {};
-  };
 
   // Handle form submission
   const handleSubmit = (values, { setSubmitting, setErrors, setStatus }) => {
@@ -101,7 +104,7 @@ const VendorDetails = () => {
       Object.values(formConfig).forEach((section) => {
         section.subFields.forEach((subField) => {
           subField.fields.forEach((field) => {
-            if (field.required && !values[field.name]) {
+            if (field.required && !formValues[field.name]) {
               validationErrors[field.name] = `${field.label} is required`;
             }
           });
@@ -110,14 +113,15 @@ const VendorDetails = () => {
 
       // If there are validation errors, set them and stop submission
       if (Object.keys(validationErrors).length > 0) {
-        setErrors(validationErrors);
+        setFormErrors(validationErrors);
         setStatus({ submitError: 'Please fill in all required fields' });
         return;
       }
 
       // Add your API call or submission logic here
       localStorage.setItem('vendorFormData', JSON.stringify({}));
-
+      setFormErrors({});
+      setFormValues({});
       // Clear any previous status messages
       setStatus({ success: 'Form submitted successfully' });
     } catch (error) {
@@ -129,13 +133,13 @@ const VendorDetails = () => {
 
   const handleFormChange = (values) => {
     try {
-      localStorage.setItem('vendorFormData', JSON.stringify(values));
+      // localStorage.setItem('vendorFormData', JSON.stringify(values));
     } catch (error) {
       console.error('Error saving to localStorage:', error);
     }
   };
 
-  const getRenderField = (field, errors) => {
+  const getRenderField = (field, formValues, errors, setFieldValue) => {
     if (field.type === 'select') {
       return (
         <StyledInputField className='form-group' key={`${field.label}`}>
@@ -143,14 +147,20 @@ const VendorDetails = () => {
             {field.label}
             {field.required && <span className='required-field' />}
           </StyledInputLabel>
-          <StyledField as='select' name={field.name} className='form-control'>
+          <Field
+            as='select'
+            name={field.name}
+            className='form-control'
+            value={formValues[field.name] || ''}
+            onChange={(e) => handleOnFieldChange(setFieldValue, e)}
+          >
             <option value=''>{`Select ${field.label}`}</option>
             {field.options.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
-          </StyledField>
+          </Field>
           {errors[field.name] ? (
             <StyledFieldError className='error'>
               {errors[field.name]}
@@ -176,6 +186,8 @@ const VendorDetails = () => {
               name={field.name}
               className='form-control'
               placeholder={field.placeholder}
+              value={formValues[field.name] || ''}
+              onChange={(e) => handleOnFieldChange(setFieldValue, e)}
             />
             {field.endAdornment && (
               <div className='input-adornment end-adornment'>
@@ -198,7 +210,13 @@ const VendorDetails = () => {
             {field.label}
             {field.required && <span className='required-field' />}
           </StyledInputLabel>
-          <StyledField type='date' name={field.name} className='form-control' />
+          <StyledField
+            type='date'
+            name={field.name}
+            className='form-control'
+            value={formValues[field.name] || ''}
+            onChange={(e) => handleOnFieldChange(setFieldValue, e)}
+          />
           {errors[field.name] ? (
             <StyledFieldError className='error'>
               {errors[field.name]}
@@ -211,19 +229,19 @@ const VendorDetails = () => {
   const AutoSave = ({ values, onSave }) => {
     const [showSaveIndicator, setShowSaveIndicator] = useState(false);
 
-    useEffect(() => {
-      const timeoutId = setTimeout(() => {
-        onSave(values);
-        setShowSaveIndicator(true);
+    // useEffect(() => {
+    //   const timeoutId = setTimeout(() => {
+    //     onSave(values);
+    //     setShowSaveIndicator(true);
 
-        // Hide the indicator after 2 seconds
-        setTimeout(() => {
-          setShowSaveIndicator(false);
-        }, 100);
-      }, 100);
+    //     // Hide the indicator after 2 seconds
+    //     setTimeout(() => {
+    //       setShowSaveIndicator(false);
+    //     }, 100);
+    //   }, 100);
 
-      return () => clearTimeout(timeoutId);
-    }, [values, onSave]);
+    //   return () => clearTimeout(timeoutId);
+    // }, [values, onSave]);
 
     return (
       <div
@@ -258,6 +276,44 @@ const VendorDetails = () => {
     setSelectedTab(tab);
   };
 
+  const handleOnFieldChange = (setFieldValue, e) => {
+    const { name, value } = e.target;
+    const decimalValues = /^\d*\.?\d*$/;
+    if (['totalAmount', 'lineAmount'].includes(name)) {
+      if (decimalValues.test(value)) {
+        setFormValues((prevValues) => ({
+          ...prevValues,
+          [name]: value,
+        }));
+        setFormErrors((prevErrors) => ({
+          ...prevErrors,
+          [name]: '',
+        }));
+      } else {
+        setFormErrors((prevErrors) => ({
+          ...prevErrors,
+          [name]: 'only numbers are allowed',
+        }));
+      }
+    } else {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        [name]: value,
+      }));
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: '',
+      }));
+    }
+    console.log('@test', name, value);
+  };
+
+  const handleOnReset = (setStatus) => {
+    setStatus('');
+    setFormErrors({});
+    setFormValues({});
+  };
+
   return (
     <div>
       <StyledFormTabs>
@@ -280,7 +336,14 @@ const VendorDetails = () => {
       <StyledContent>
         <StyledUploader>
           <FileUploader
-            onFail={() => {}}
+            onFail={() => {
+              setFormErrors({});
+              setFormValues(uploaderFormValues);
+            }}
+            onSuccess={() => {
+              setFormErrors({});
+              setFormValues(uploaderFormValues);
+            }}
             onUploadButtonClick={() => {}}
             files={[]}
             setFiles={() => {}}
@@ -298,22 +361,18 @@ const VendorDetails = () => {
         </StyledUploader>
         <StyledFormContent>
           <Formik
-            initialValues={getInitialValues()}
+            initialValues={formValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
-            validateOnBlur={true}
-            validateOnChange={true}
-            validateOnSubmit={true}
           >
             {({
               values,
-              errors,
-              resetForm,
               status,
-              isSubmitting,
               setSubmitting,
               setErrors,
               setStatus,
+              setFieldValue,
+              setValues,
             }) => {
               return (
                 <Form>
@@ -359,7 +418,12 @@ const VendorDetails = () => {
                                 )}
                                 <StyledFormFieldRows className='fields-row'>
                                   {subField.fields.map((field) =>
-                                    getRenderField(field, errors)
+                                    getRenderField(
+                                      field,
+                                      formValues,
+                                      formErrors,
+                                      setFieldValue
+                                    )
                                   )}
                                 </StyledFormFieldRows>
                               </StyledFormSubField>
@@ -370,9 +434,9 @@ const VendorDetails = () => {
                     })}
                     <StyledButtonGroup>
                       <button
-                        type='reset'
+                        type='button'
                         className='reset-btn'
-                        onClick={resetForm}
+                        onClick={() => handleOnReset(setStatus)}
                       >
                         Reset All
                       </button>

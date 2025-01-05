@@ -266,6 +266,21 @@ export const StyledInputField = styled.div`
   flex-direction: column;
   gap: 8px;
 
+  .form-control {
+    width: 100%;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #64748b;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+    height: 40px;
+    padding: 12px;
+
+    ::placeholder {
+      color: #6c757d;
+      opacity: 0.5;
+    }
+  }
   @media ${devices.mobile} {
     flex: 1 1 100%;
   }
